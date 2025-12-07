@@ -22,28 +22,63 @@ class TodoItem extends StatelessWidget {
       onDismissed: onDismissed,
       background: Container(
         color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 20.0),
+        alignment: Alignment.center,
         child: const Icon(Icons.delete, color: Colors.white),
       ),
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: ListTile(
-          onTap: onTap,
-          leading: Icon(
-            todo.isCompleted ? Icons.check_box : Icons.check_box_outline_blank,
-            color: todo.isCompleted ? Colors.green : null,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Card(
+          elevation: 4.0,
+          margin: const EdgeInsets.all(8.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
-          title: Text(
-            todo.title,
-            style: GoogleFonts.roboto(
-              fontSize: 16,
-              decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
-            ),
+          child: Stack(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (todo.title != null && todo.title!.isNotEmpty)
+                        Text(
+                          todo.title!,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+                            color: todo.isCompleted ? Colors.grey : Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      if (todo.title != null && todo.title!.isNotEmpty)
+                        const SizedBox(height: 8.0),
+                      Text(
+                        todo.description,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+                          color: todo.isCompleted ? Colors.grey : Theme.of(context).colorScheme.onSurface.withAlpha(204),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 4.0,
+                right: 4.0,
+                child: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {
+                    // Placeholder for more options
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
